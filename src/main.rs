@@ -12,18 +12,17 @@ fn fw(s: &mut String) -> String {
 }
 
 fn main() {
-    let args = std::env::args()
-        .skip(1)
-        .map(|mut s| {
-                 print!("{}", fw(&mut s));
-             })
-        .collect::<Vec<_>>();
+    let pretty_print = |mut s| {
+        print!("{}", fw(&mut s));
+    };
+    let args = std::env::args().skip(1).map(pretty_print).collect::<Vec<_>>();
     if args.is_empty() {
-        let mut input = String::new();
-        loop {
-            if let Ok(_) = std::io::stdin().read_line(&mut input) {
-                print!("{}", fw(&mut input));
-            }
-        }
+        use std::io::BufRead;
+        let stdin = std::io::stdin();
+        stdin.lock()
+            .lines()
+            .map(|line| line.unwrap_or("".to_string()) + "\n")
+            .map(pretty_print)
+            .collect::<Vec<_>>();
     }
 }
