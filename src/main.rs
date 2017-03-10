@@ -1,5 +1,5 @@
 fn main() {
-    let fw = |c: char| if c.is_alphabetic() {
+    let fw = |c: char| if c.is_alphanumeric() {
         std::char::from_u32(c as u32 + 65248)
     } else {
          match c { ' ' => Some('　'), _ => Some(c), }
