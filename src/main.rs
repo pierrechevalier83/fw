@@ -1,5 +1,6 @@
 fn main() {
-    let fw = |c: char| if c.is_alphanumeric() {
+    use std::ascii::AsciiExt;
+    let fw = |c: char| if c.is_ascii() {
         std::char::from_u32(c as u32 + 65248)
     } else {
          match c { ' ' => Some('　'), _ => Some(c), }
